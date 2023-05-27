@@ -7,6 +7,7 @@ let isValid = {
     "userAdd": false,
     "userCode": false,
 }
+let userData = [];
 
 const validation=()=>{
     const submitBtn = document.getElementById('registerBtn');
@@ -18,6 +19,7 @@ const validation=()=>{
         submitBtn.style.cursor = 'not-allowed';
     }
 }
+validation();
 
 //showpass
     const showPass_1 = document.getElementById('showPass_1');
@@ -74,7 +76,6 @@ userName.addEventListener('keyup',(e)=>{
 
     validation();
 });
-
 
 //user phone
 const userPhone = document.getElementById("userPhone");
@@ -224,3 +225,46 @@ userZipCode.addEventListener('keyup',(e)=>{
 
     validation();
 })
+
+//resgiter button
+document.getElementById('registerBtn').addEventListener('click',(e)=>{
+    e.preventDefault();
+    userData.push(
+        {
+            "Name":document.getElementById('userName').value,
+            "Phone":document.getElementById("userPhone").value,
+            "Email":document.getElementById('userEmail').value,
+            "Password":document.getElementById("userPassword").value,
+            "Address": document.getElementById('userAdd').value,
+            "ZipCode":document.getElementById('userZipCode').value
+        }
+    );
+    setTimeout(()=>{
+        localStorage.setItem('UserData',JSON.stringify(userData));
+    },1000);
+
+    // alert("Your data is saved to your local storage");
+
+    const name = document.createElement('p');
+    name.innerText = `Name: ${document.getElementById('userName').value}`
+    const phone = document.createElement('p');
+    phone.innerText =`Phone: ${document.getElementById("userPhone").value}`
+    const email = document.createElement('p');
+    email.innerText =`Email: ${document.getElementById('userEmail').value}`
+    const password = document.createElement('p');
+    password.innerText =`Password: ${document.getElementById("userPassword").value}`
+    const address = document.createElement('p');
+    address.innerText =`Address: ${document.getElementById('userAdd').value}`
+    const zipCode = document.createElement('p');
+    zipCode.innerText =`Zip code: ${document.getElementById('userZipCode').value}`
+    document.getElementById('displayData').appendChild(name);
+    document.getElementById('displayData').appendChild(phone);
+    document.getElementById('displayData').appendChild(email);
+    document.getElementById('displayData').appendChild(password);
+    document.getElementById('displayData').appendChild(address);
+    document.getElementById('displayData').appendChild(zipCode);
+});
+
+const reload=()=>{
+    location.reload();
+}
